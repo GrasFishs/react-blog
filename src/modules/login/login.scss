@@ -1,0 +1,27 @@
+@import "../../theme/index.scss";
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  .panel {
+    background: white;
+    padding: 30px;
+    @include shadow();
+    .submit {
+      margin: 20px 0;
+    }
+  }
+}
+
+@media all and (max-width: $md) {
+  .panel {
+    width: 60%;
+  }
+}
+
+@media all and (min-width:$md){
+  .panel {
+    width: 400px;
+  }
+}

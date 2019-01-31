@@ -1,0 +1,51 @@
+@import "../../theme/index.scss";
+
+$animation-during: 0.2s;
+
+@mixin onHover($backgroundColor, $color: white) {
+  $light-bg: lighten(
+    $color: $backgroundColor,
+    $amount: 5
+  );
+  $dark-bg: darken(
+    $color: $backgroundColor,
+    $amount: 5
+  );
+  & {
+    box-sizing: border-box;
+    background-color: $backgroundColor;
+    color: $color;
+    transition: background-color ease $animation-during;
+    outline: none;
+    border: 2px solid $light-bg;
+    padding: 8px 25px;
+    cursor: pointer;
+    &:hover,
+    &:visited {
+      background-color: $light-bg;
+      border: 2px solid $backgroundColor;
+    }
+    &:active {
+      background-color: $dark-bg;
+      border: 2px solid $backgroundColor;
+    }
+  }
+}
+.primary {
+  @include onHover($primary-color);
+}
+.secondary {
+  @include onHover($secondary-color);
+}
+.success {
+  @include onHover($success-color);
+}
+.danger {
+  @include onHover($danger-color);
+}
+.warning {
+  @include onHover($warning-color, $font-color);
+}
+.default {
+  @include onHover($default-color, $font-color);
+}

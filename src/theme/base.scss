@@ -1,0 +1,26 @@
+@import './color.scss';
+$font-size: 16px;
+$prefix: 'grasfish';
+
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+
+div,
+span,
+p {
+  font-size: $font-size;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+* {
+  color: inherit $font-color;
+}

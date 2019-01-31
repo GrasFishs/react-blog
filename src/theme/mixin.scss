@@ -1,0 +1,27 @@
+@import './color.scss';
+
+@mixin size($width, $height) {
+  position: relative;
+  width: $width;
+  height: $height;
+}
+
+@mixin square($size) {
+  @include size($size, $size);
+}
+
+@mixin ct() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin cl() {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin shadow() {
+  box-shadow: 0 3px 6px $black-16;
+}
