@@ -1,5 +1,4 @@
 import * as React from "react";
-import { EffectDispatch, IStateRoot } from "src";
 import {
   ILoginAction,
   loginActions,
@@ -10,6 +9,7 @@ import { connect } from "react-redux";
 import styles from "./login.scss";
 import { Input, Button } from "src/components";
 import { RouteComponentProps } from "react-router";
+import { EffectDispatch, IStateRoot } from 'src/reducers';
 
 interface ILoginProps extends RouteComponentProps {
   login: ILoginState;

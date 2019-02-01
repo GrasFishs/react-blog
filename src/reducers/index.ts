@@ -1,7 +1,9 @@
 import { reducers } from "./../models/index";
 import { IModelReducer } from "./../types/redux";
-import { combineReducers, Action } from "redux";
+import { combineReducers, Action, createStore, applyMiddleware } from "redux";
 import { IModel } from "../types/redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 interface IReducerModel {
   [key: string]: IModel<any, Action>;
@@ -17,11 +19,11 @@ export const createReducer = <S, A extends Action>(
   inistalState: S,
   prefix: string,
   modelReducers: IModelReducer<S, A>
-) => (state: S = inistalState, action: A): S => {
+) => (s: S = inistalState, action: A): S => {
   const type = action.type.replace(`${prefix}/`, "");
   return modelReducers.hasOwnProperty(type)
-    ? modelReducers[type](state, action)
-    : state;
+    ? modelReducers[type](s, action)
+    : s;
 };
 
 /**
@@ -35,10 +37,29 @@ function createReducers(models: IReducerModel): IModelReducer<any, Action> {
     throw new Error("namespace should be unique");
   }
   modelsKeys.forEach(key => {
-    const { namespace, state, reducers: r } = models[key];
-    obj[namespace] = createReducer(state, namespace, r);
+    const { namespace: n, state: s, reducers: r } = models[key];
+    obj[n] = createReducer(s, n, r);
   });
   return obj;
 }
+const reducer = combineReducers(createReducers(reducers));
 
-export const reducer = combineReducers(createReducers(reducers));
+export const store = createStore(
+  reducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+const state = store.getState();
+export type IStateRoot = typeof state;
+
+export type EffectAction<R, A extends Action> = ThunkAction<
+  R,
+  IStateRoot,
+  undefined,
+  A
+>;
+
+export type EffectDispatch<A extends Action> = ThunkDispatch<
+  IStateRoot,
+  undefined,
+  A
+>;

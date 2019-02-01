@@ -2,7 +2,7 @@ import axios from "axios";
 import * as qs from "querystring";
 
 const type = process.env.NODE_ENV === "development" ? 0 : 1;
-const URL = ["http://localhost:3000/api"][type];
+const URL = ["http://localhost:8080/api"][type];
 
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem("token");

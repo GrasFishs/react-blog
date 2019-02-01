@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { IAction, IModel } from "../../types/redux";
-import { EffectAction } from "src";
 import { loginService } from "./login.service";
 import { IUser } from "src/data/User";
 import { userActions, IUserAction } from "../user/detail/user.model";
+import { EffectAction } from 'src/reducers';
 
 export interface ILoginState {
   username: string;

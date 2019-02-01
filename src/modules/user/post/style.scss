@@ -1,0 +1,60 @@
+@import '../../../theme/index.scss';
+.post {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  .header {
+    display: flex;
+    input {
+      flex: 1;
+      display: block;
+      outline: none;
+      padding: 10px;
+      font-size: 1.2em;
+      border: none;
+      border-bottom: 1px solid $black-16;
+      color: $black-64;
+    }
+  }
+  .body {
+    display: flex;
+    height: 100%;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    .content {
+      flex: 1;
+      border: none;
+      border-right: 2px solid #ccc;
+      resize: none;
+      outline: none;
+      background-color: #f6f6f6;
+      font-size: 14px;
+      font-family: "Monaco", courier, monospace;
+      padding: 20px 20px 60px 20px;
+      overflow-y: auto;
+    }
+    .markdown {
+      flex: 1;
+      box-sizing: border-box;
+      padding: 20px 20px 40px 20px;
+      word-break: break-all;
+      overflow-y: auto;
+      position: relative;
+      img {
+        @include cl();
+        position: relative;
+        display: block;
+      }
+    }
+  }
+  @media all and (max-width: $md) {
+    .body {
+      flex-direction: column-reverse;
+      .content {
+        box-shadow: 0 0 10px 2px $black-16;
+        border: none;
+      }
+    }
+  }
+}
