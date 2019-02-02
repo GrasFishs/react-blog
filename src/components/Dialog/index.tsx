@@ -62,7 +62,7 @@ export function Dialog(config: IConfig) {
             }}
           >
             <Button
-              theme={"danger"}
+              theme={props.type}
               onClick={() => {
                 props.onOk();
                 close(props);

@@ -1,0 +1,17 @@
+@import "../../theme/index.scss";
+
+.message {
+  position: fixed;
+  z-index: 30000;
+  top: 20px;
+  width: 200px;
+  min-height: 20px;
+  left: 50%;
+}
+
+.panel {
+  display: flex;
+  padding: 10px;
+  word-break: break-all;
+  @include shadow();
+}

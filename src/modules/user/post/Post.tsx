@@ -7,7 +7,6 @@ import { Button } from "src/components";
 import { RouteComponentProps } from "react-router";
 import { IUserState } from "../detail/user.model";
 import { checkToken } from "src/Hoc/checkToken";
-import { Modal } from "src/components/Dialog/Modal";
 
 const md = Markdown({
   html: true,
@@ -26,14 +25,12 @@ interface IProps extends RouteComponentProps {
 interface IState {
   content: string;
   title: string;
-  show: boolean;
 }
 
 class EditArticle extends React.PureComponent<IProps, IState> {
   public state: IState = {
     content: "# " + dayjs().format("YYYY-MM-DD"),
-    title: dayjs().format("YYYY-MM-DD"),
-    show: true
+    title: dayjs().format("YYYY-MM-DD")
   };
 
   private contentNode: React.RefObject<HTMLTextAreaElement> = React.createRef();
@@ -58,25 +55,13 @@ class EditArticle extends React.PureComponent<IProps, IState> {
   public render() {
     return (
       <div className={styles.post}>
-        <Modal
-          title={"标题"}
-          isShow={this.state.show}
-          onHide={() => this.setState({ show: false })}
-          onOk={() => setTimeout(() => this.setState({ show: false }), 300)}
-        >
-          <div>1</div>
-        </Modal>
         <div className={styles.header}>
           <input
             type="text"
             value={this.state.title}
             onChange={this.handleTitleChange.bind(this)}
           />
-          <Button
-            theme="danger"
-            style={{ width: 200 }}
-            onClick={() => this.setState({ show: true })}
-          >
+          <Button theme="danger" style={{ width: 200 }}>
             发布
           </Button>
         </div>
