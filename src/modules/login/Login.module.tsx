@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import styles from "./login.scss";
 import { Input, Button } from "src/components";
 import { RouteComponentProps } from "react-router";
-import { EffectDispatch, IStateRoot } from 'src/reducers';
+import { EffectDispatch, IStateRoot } from "src/reducers";
 
 interface ILoginProps extends RouteComponentProps {
   login: ILoginState;
@@ -23,8 +23,7 @@ const Login: React.SFC<ILoginProps> = props => {
     props.dispatch(loginActions.setPassword(e.target["password"].value));
     props
       .dispatch(loginEffects.login())
-      .then(({ id }) => props.history.replace("/index/user/" + id))
-      .catch(err => alert("fail" + err));
+      .then(({ id }) => props.history.replace("/index/user/" + id));
   }
   return (
     <div className={styles.login}>

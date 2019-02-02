@@ -104,3 +104,10 @@ export function Dialog(config: IConfig) {
     r(<ConfigDialog {...props} />, container);
   }
 }
+
+export const dialog = {
+  success: (config: IConfig) => Dialog({ ...config, type: "success" }),
+  danger: (config: IConfig) => Dialog({ ...config, type: "danger" }),
+  warning: (config: IConfig) => Dialog({ ...config, type: "warning" }),
+  info: (config: IConfig) => Dialog({ ...config, type: "info" })
+};

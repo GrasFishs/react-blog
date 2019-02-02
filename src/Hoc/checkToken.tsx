@@ -4,7 +4,7 @@ import { IUserAction } from "src/modules/user/detail/user.model";
 import { gloablService } from "./service";
 import { RouteChildrenProps } from "react-router";
 import { connect } from "react-redux";
-import { Dialog } from "src/components/Dialog";
+import { dialog } from "src/components/Dialog";
 
 interface IProps extends RouteChildrenProps {
   dispatch: EffectDispatch<IUserAction>;
@@ -17,11 +17,10 @@ export const checkToken = (
     public componentDidMount() {
       const { dispatch, history } = this.props;
       dispatch(gloablService.checkToken()).catch(err => {
-        Dialog({
-          type: "danger",
+        dialog.danger({
           content: err.message,
           onOk() {
-            history.push("/login");
+            history.replace("/login");
           }
         });
       });

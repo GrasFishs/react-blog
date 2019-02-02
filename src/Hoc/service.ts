@@ -17,11 +17,15 @@ export const gloablService = {
         dispatch(userActions.setUser(user));
         return user;
       } catch (err) {
-        const errorName = err.response.data.error.name;
-        if (errorName in tokenError) {
-          throw new Error(tokenError[errorName]);
+        if (err.response) {
+          const errorName = err.response.data.error.name;
+          if (errorName in tokenError) {
+            throw new Error(tokenError[errorName]);
+          } else {
+            throw new Error("请重新你登录");
+          }
         } else {
-          throw new Error("请重新你登录");
+          throw new Error("网络错误");
         }
       }
     };

@@ -22,8 +22,12 @@ function messageRender(config: IMessageProps) {
 }
 
 export const message = {
-  info: (content: string) => messageRender({ content, type: "info" }),
-  warning: (content: string) => messageRender({ content, type: "warning" }),
-  danger: (content: string) => messageRender({ content, type: "danger" }),
-  success: (content: string) => messageRender({ content, type: "success" })
+  info: (content: string, duration?: number) =>
+    messageRender({ content, type: "info", duration }),
+  warning: (content: string, duration?: number) =>
+    messageRender({ content, type: "warning", duration }),
+  danger: (content: string, duration?: number) =>
+    messageRender({ content, type: "danger", duration }),
+  success: (content: string, duration?: number) =>
+    messageRender({ content, type: "success", duration })
 };
