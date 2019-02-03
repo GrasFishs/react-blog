@@ -5,10 +5,8 @@ export interface IArticle {
   id: number;
   title: string;
   content: string;
-  createdTime: string;
-  updatedTime: string;
-  articleImages: IArticleImage[];
-  tags: ITag[];
+  createdTime: number;
+  updatedTime: number;
 }
 
 export interface IArticleImage {

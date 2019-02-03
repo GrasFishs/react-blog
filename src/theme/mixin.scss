@@ -22,6 +22,6 @@
   transform: translateX(-50%);
 }
 
-@mixin shadow() {
-  box-shadow: 0 3px 6px $black-16;
+@mixin shadow($x:0,$y:3px,$blur:6px,$color:$black-16) {
+  box-shadow: $x $y $blur $color;
 }
