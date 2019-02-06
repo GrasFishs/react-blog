@@ -38,13 +38,13 @@ export const articlesModel: IModel<IArticlesState, IArticlesAction> = {
 export const articlesActions = {
   setArticles(articles: IDataArticle[]) {
     return {
-      type: "SET_ARTICLES",
+      type: "articles/SET_ARTICLES",
       payload: { articles }
     };
   },
   setTotal(total: number) {
     return {
-      type: "SET_TOTAL",
+      type: "articles/SET_TOTAL",
       payload: { total }
     };
   }

@@ -1,0 +1,33 @@
+@import '../../theme/index.scss';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .page {
+    border-radius: 5px;
+    border: 1.5px solid $black-32;
+    color: $black-32;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    transition: all ease 0.1s;
+    cursor: pointer;
+    &.diable {
+      @extend .page;
+      color: $black-16;
+      border-color: $black-16;
+      cursor: not-allowed;
+    }
+    &.active {
+      transition: none;
+      font-weight: 600;
+      border-color: $danger-color;
+      background: $danger-color;
+      color: white;
+    }
+  }
+}

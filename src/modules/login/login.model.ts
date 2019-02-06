@@ -47,7 +47,7 @@ export const loginModel: IModel<ILoginState, ILoginAction> = {
 export const loginActions = {
   setUsername(username: string) {
     return {
-      type: "SET_USERNAME",
+      type: "login/SET_USERNAME",
       payload: {
         username
       }
@@ -55,7 +55,7 @@ export const loginActions = {
   },
   setPassword(password: string) {
     return {
-      type: "SET_PASSWORD",
+      type: "login/SET_PASSWORD",
       payload: {
         password
       }
@@ -63,7 +63,7 @@ export const loginActions = {
   },
   setStatus(status: boolean) {
     return {
-      type: "SET_STATUS",
+      type: "login/SET_STATUS",
       payload: {
         status
       }

@@ -8,9 +8,11 @@ import {
 import { EffectDispatch, IStateRoot } from "src/reducers";
 import { connect } from "react-redux";
 import { Articles } from "./components/Articles";
-import { Button } from "src/components";
+import { Pagenation } from "../../../components/Pagination";
+import { IDeviceState } from "src/models/global";
 interface IProps extends RouteChildrenProps {
   articles: IArticlesState;
+  device: IDeviceState;
   dispatch: EffectDispatch<IArticlesAction>;
 }
 
@@ -21,7 +23,7 @@ interface IState {
 class ArticleList extends React.PureComponent<IProps, IState> {
   public state: IState = {
     page: 1,
-    size: 10
+    size: 5
   };
 
   public componentDidMount() {
@@ -34,22 +36,29 @@ class ArticleList extends React.PureComponent<IProps, IState> {
     });
   }
 
-  private changePage(change: number) {
-    this.setState({ page: this.state.page + change }, () => this.fetch());
+  private changePage(page: number) {
+    this.setState({ page }, () => this.fetch());
   }
 
   public render() {
-    const { articles } = this.props;
+    const { articles, device } = this.props;
+    const { size, page } = this.state;
     return (
       <div>
         <Articles articles={articles.articles} />
-        <Button onClick={this.changePage.bind(this, -1)}>-</Button>
-        <Button onClick={this.changePage.bind(this, 1)}>+</Button>
+        <Pagenation
+          total={articles.total}
+          size={size}
+          page={page}
+          pagesCount={device.isMobile ? 3 : device.isPad ? 5 : 8}
+          onChange={this.changePage.bind(this)}
+        />
       </div>
     );
   }
 }
 
-export default connect(({ articles }: IStateRoot) => ({ articles }))(
-  ArticleList
-);
+export default connect(({ articles, device }: IStateRoot) => ({
+  articles,
+  device
+}))(ArticleList);

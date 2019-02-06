@@ -27,7 +27,7 @@ export const userModel: IModel<IUserState, IUserAction> = {
 export const userActions = {
   setUser(user: IUser) {
     return {
-      type: "SET_USER",
+      type: "user/SET_USER",
       payload: { user }
     };
   }

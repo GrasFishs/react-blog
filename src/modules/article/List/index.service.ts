@@ -34,7 +34,7 @@ const createArticles = (len: number) => {
 class ArticlesService implements IService {
   public prefix = "articles";
 
-  private total = 15;
+  private total = 46;
   private data: IDataArticle[];
   constructor() {
     this.data = createArticles(this.total);
