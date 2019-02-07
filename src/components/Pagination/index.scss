@@ -16,6 +16,7 @@
     height: 30px;
     transition: all ease 0.1s;
     cursor: pointer;
+    background: white;
     &.diable {
       @extend .page;
       color: $black-16;

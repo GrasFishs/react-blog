@@ -53,10 +53,14 @@ export const articlesActions = {
 export const articlesEffects = {
   getArticles({
     page,
-    size
+    size,
+    sortby = "createdTime",
+    order = "desc"
   }: {
     page: number;
     size: number;
+    sortby?: string;
+    order?: string;
   }): EffectAction<Promise<IArticlesData>, IArticlesAction> {
     return async (
       dispatch: Dispatch<IArticlesAction>
@@ -64,7 +68,9 @@ export const articlesEffects = {
       try {
         const data = await articlesService.getCommonArticles({
           page,
-          size
+          size,
+          sortby,
+          order
         });
         dispatch(articlesActions.setArticles(data.articles));
         dispatch(articlesActions.setTotal(data.total));

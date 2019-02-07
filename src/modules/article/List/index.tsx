@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import { Articles } from "./components/Articles";
 import { Pagenation } from "../../../components/Pagination";
 import { IDeviceState } from "src/models/global";
+import styles from './style.scss';
+
 interface IProps extends RouteChildrenProps {
   articles: IArticlesState;
   device: IDeviceState;
@@ -44,7 +46,7 @@ class ArticleList extends React.PureComponent<IProps, IState> {
     const { articles, device } = this.props;
     const { size, page } = this.state;
     return (
-      <div>
+      <div className={styles.articles}>
         <Articles articles={articles.articles} />
         <Pagenation
           total={articles.total}
