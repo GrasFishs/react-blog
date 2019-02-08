@@ -22,7 +22,10 @@ export const Article: React.SFC<{ article: IDataArticle }> = ({ article }) => {
         </div>
         {article.cover ? (
           <div className={styles.cover}>
-            <img src={article.cover} />
+            <div
+              className={styles.zoomImage}
+              style={{ backgroundImage: `url(${article.cover})` }}
+            />
           </div>
         ) : null}
       </div>
@@ -41,8 +44,8 @@ export const Article: React.SFC<{ article: IDataArticle }> = ({ article }) => {
         </div>
       </div>
       {/* <div className={styles.date}>
-      最后编辑于{dayjs(article.updatedTime).format("YYYY-MM-DD hh:mm:ss")}
-    </div> */}
+        最后编辑于{dayjs(article.updatedTime).format("YYYY-MM-DD hh:mm:ss")}
+      </div> */}
     </div>
   );
 };
