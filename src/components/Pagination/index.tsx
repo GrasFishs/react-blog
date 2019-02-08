@@ -22,12 +22,12 @@ export class Pagenation extends React.PureComponent<IProps, IState> {
     page: 1,
     size: 10,
     total: 10,
-    pagesCount: 5
+    pagesCount: 1
   };
 
   public state: IState = {
     min: 1,
-    max: 5,
+    max: 1,
     currentPage: 1
   };
 

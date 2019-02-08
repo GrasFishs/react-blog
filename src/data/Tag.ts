@@ -1,5 +1,5 @@
 export interface ITag {
   id: number;
-  parentTag: ITag | null;
+  parentId?: number;
   name: string;
 }

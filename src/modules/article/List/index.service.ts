@@ -17,7 +17,6 @@ export interface IArticlesData {
   articles: IDataArticle[];
   total: number;
 }
-
 class ArticlesService implements IService {
   public prefix = "/articles";
 
@@ -38,6 +37,10 @@ class ArticlesService implements IService {
       sortby,
       order
     });
+  }
+
+  public async getTags(): Promise<{ tags: ITag[] }> {
+    return get<{ tags: ITag[] }>("/tag/all");
   }
 }
 

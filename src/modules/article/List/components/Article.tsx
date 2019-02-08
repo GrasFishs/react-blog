@@ -15,8 +15,17 @@ export const Article: React.SFC<{ article: IDataArticle }> = ({ article }) => {
           {article.tags.map(tag => tag.name).join("/")}
         </div>
       </div>
-      <div className={styles.title}>{article.title}</div>
-      <div className={styles.content}>{article.content}</div>
+      <div className={styles.body}>
+        <div className={styles.info}>
+          <div className={styles.title}>{article.title}</div>
+          <div className={styles.content}>{article.content}</div>
+        </div>
+        {article.cover ? (
+          <div className={styles.cover}>
+            <img src={article.cover} />
+          </div>
+        ) : null}
+      </div>
       <div className={styles.bottom}>
         <div className={styles.item}>
           <FaEye style={{ fontSize: 18 }} />

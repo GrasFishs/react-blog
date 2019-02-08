@@ -1,0 +1,26 @@
+@import "../../../../theme/index.scss";
+
+.tags {
+  @include shadow($y: 2px);
+  width: 350px;
+  min-height: 175px;
+  background: white;
+  margin-left: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  .title {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .tag {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    @include shadow($y: 1px);
+    color: $black-64;
+    cursor: pointer;
+  }
+  &.sticky {
+    position: fixed;
+  }
+}

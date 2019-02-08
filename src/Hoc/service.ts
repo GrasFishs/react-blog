@@ -3,6 +3,7 @@ import { IUserAction, userActions } from "src/modules/user/detail/user.model";
 import { Dispatch } from "redux";
 import { get } from "src/tools/request";
 import { IUser } from "src/data/User";
+import { loginActions, ILoginAction } from "src/modules/login/login.model";
 
 const tokenError = {
   JsonWebTokenError: "您可能清空了localstorage或cookie导致不能在线",
@@ -11,10 +12,13 @@ const tokenError = {
 
 export const gloablService = {
   checkToken(): EffectAction<Promise<IUser>, IUserAction> {
-    return async (dispatch: Dispatch<IUserAction>): Promise<IUser> => {
+    return async (
+      dispatch: Dispatch<IUserAction | ILoginAction>
+    ): Promise<IUser> => {
       try {
         const { user } = await get<{ user: IUser }>("/auth/check");
         dispatch(userActions.setUser(user));
+        dispatch(loginActions.setStatus(true));
         return user;
       } catch (err) {
         if (err.response) {

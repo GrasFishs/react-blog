@@ -3,9 +3,11 @@ import { IAction, IModel } from "src/types/redux";
 import { EffectAction } from "src/reducers";
 import { Dispatch } from "react";
 import { message } from "src/components/Message";
+import { ITag } from "src/data/Tag";
 
 export interface IArticlesState {
   articles: IDataArticle[];
+  tags: ITag[];
   total: number;
 }
 
@@ -17,6 +19,7 @@ export const articlesModel: IModel<IArticlesState, IArticlesAction> = {
   namespace: "articles",
   state: {
     articles: [],
+    tags: [],
     total: 0
   },
   reducers: {
@@ -30,6 +33,12 @@ export const articlesModel: IModel<IArticlesState, IArticlesAction> = {
       return {
         ...state,
         total
+      };
+    },
+    SET_TAGS(state, { payload: { tags = [] } }) {
+      return {
+        ...state,
+        tags
       };
     }
   }
@@ -46,6 +55,12 @@ export const articlesActions = {
     return {
       type: "articles/SET_TOTAL",
       payload: { total }
+    };
+  },
+  setTags(tags: ITag[]) {
+    return {
+      type: "articles/SET_TAGS",
+      payload: { tags }
     };
   }
 };
@@ -77,6 +92,17 @@ export const articlesEffects = {
         return data;
       } catch (err) {
         message.danger(err.message);
+        throw err;
+      }
+    };
+  },
+  getTags(): EffectAction<Promise<ITag[]>, IArticlesAction> {
+    return async (dispatch: Dispatch<IArticlesAction>): Promise<ITag[]> => {
+      try {
+        const { tags } = await articlesService.getTags();
+        dispatch(articlesActions.setTags(tags));
+        return tags;
+      } catch (err) {
         throw err;
       }
     };

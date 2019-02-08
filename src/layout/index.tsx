@@ -1,18 +1,16 @@
 import * as React from "react";
-import {
-  RouteComponentProps,
-  withRouter,
-  Switch
-  // Redirect
-} from "react-router";
+import { RouteComponentProps, withRouter, Switch } from "react-router";
 import { Route } from "react-router-dom";
 import { asyncComponent } from "../components/AsyncComponent";
-import { EffectDispatch } from "../reducers";
-import { IUserAction } from "src/modules/user/detail/user.model";
+import { EffectDispatch, IStateRoot } from "../reducers";
+import { IUserAction, IUserState } from "src/modules/user/detail/user.model";
 import { connect } from "react-redux";
 import { fromEvent, Subscription } from "rxjs";
 import { debounceTime, map } from "rxjs/operators";
 import { IDeviceAction, deviceActions } from "src/models/global";
+import { Header } from "./components/Header";
+import { checkToken } from "src/Hoc/checkToken";
+import styles from "./style.scss";
 
 const userModule = asyncComponent(() => import("../modules/user/User.module"));
 const ArticleModule = asyncComponent(() =>
@@ -24,6 +22,8 @@ interface IRouteParams {
 }
 
 interface ILayoutProps extends RouteComponentProps<IRouteParams> {
+  user: IUserState;
+  loginStatus: boolean;
   dispatch: EffectDispatch<IUserAction | IDeviceAction>;
 }
 
@@ -47,17 +47,30 @@ class LayoutModule extends React.PureComponent<ILayoutProps> {
 
   public render() {
     const {
-      match: { url }
+      match: { url },
+      history,
+      user,
+      loginStatus
     } = this.props;
     return (
       <div>
-        <Switch>
-          {/* <Redirect from={url} to={`${url}/article`} /> */}
-          <Route path={`${url}/user`} component={userModule} />
-          <Route path={`${url}/article`} component={ArticleModule} />
-        </Switch>
+        <Header user={user} loginStatus={loginStatus} history={history}>
+          <div className={styles.body}>
+            <Switch>
+              <Route exact path={url} component={ArticleModule} />
+              <Route path={`${url}/user`} component={userModule} />
+            </Switch>
+          </div>
+        </Header>
       </div>
     );
   }
 }
-export default withRouter(connect()(LayoutModule));
+export default checkToken(
+  withRouter(
+    connect(({ user, login }: IStateRoot) => ({
+      user,
+      loginStatus: login.status
+    }))(LayoutModule)
+  )
+);

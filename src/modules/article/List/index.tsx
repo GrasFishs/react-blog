@@ -10,7 +10,8 @@ import { connect } from "react-redux";
 import { Articles } from "./components/Articles";
 import { Pagenation } from "../../../components/Pagination";
 import { IDeviceState } from "src/models/global";
-import styles from './style.scss';
+import styles from "./style.scss";
+import { Tags } from "./components/Tags";
 
 interface IProps extends RouteChildrenProps {
   articles: IArticlesState;
@@ -25,11 +26,12 @@ interface IState {
 class ArticleList extends React.PureComponent<IProps, IState> {
   public state: IState = {
     page: 1,
-    size: 5
+    size: 10
   };
 
   public componentDidMount() {
     this.fetch();
+    this.props.dispatch(articlesEffects.getTags());
   }
 
   private fetch() {
@@ -46,15 +48,18 @@ class ArticleList extends React.PureComponent<IProps, IState> {
     const { articles, device } = this.props;
     const { size, page } = this.state;
     return (
-      <div className={styles.articles}>
-        <Articles articles={articles.articles} />
-        <Pagenation
-          total={articles.total}
-          size={size}
-          page={page}
-          pagesCount={device.isMobile ? 3 : device.isPad ? 5 : 8}
-          onChange={this.changePage.bind(this)}
-        />
+      <div className={styles.container}>
+        <div className={styles.articles}>
+          <Articles articles={articles.articles} />
+          <Pagenation
+            total={articles.total}
+            size={size}
+            page={page}
+            pagesCount={device.isMobile ? 3 : device.isPad ? 5 : 8}
+            onChange={this.changePage.bind(this)}
+          />
+        </div>
+        {!device.isMobile ? <Tags tags={articles.tags} /> : null}
       </div>
     );
   }
