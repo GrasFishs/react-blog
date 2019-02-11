@@ -82,4 +82,4 @@ class EditArticle extends React.PureComponent<IProps, IState> {
   }
 }
 
-export default checkToken(EditArticle);
+export default checkToken()(EditArticle);

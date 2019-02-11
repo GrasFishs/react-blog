@@ -33,7 +33,7 @@ class LayoutModule extends React.PureComponent<ILayoutProps> {
   public componentDidMount() {
     this.props.dispatch(deviceActions.setWidth(window.innerWidth));
     const widthWatcher$ = fromEvent(window, "resize").pipe(
-      debounceTime(300),
+      debounceTime(10),
       map(() => window.innerWidth)
     );
     this.subscribtion = widthWatcher$.subscribe(width => {
@@ -66,7 +66,7 @@ class LayoutModule extends React.PureComponent<ILayoutProps> {
     );
   }
 }
-export default checkToken(
+export default checkToken(false)(
   withRouter(
     connect(({ user, login }: IStateRoot) => ({
       user,

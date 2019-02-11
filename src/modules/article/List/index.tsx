@@ -12,9 +12,11 @@ import { Pagenation } from "../../../components/Pagination";
 import { IDeviceState } from "src/models/global";
 import styles from "./style.scss";
 import { Tags } from "./components/Tags";
+import { tagEffects, ITagState } from "src/modules/tags/tag.model";
 
 interface IProps extends RouteChildrenProps {
   articles: IArticlesState;
+  tag: ITagState;
   device: IDeviceState;
   dispatch: EffectDispatch<IArticlesAction>;
 }
@@ -31,7 +33,7 @@ class ArticleList extends React.PureComponent<IProps, IState> {
 
   public componentDidMount() {
     this.fetch();
-    this.props.dispatch(articlesEffects.getTags());
+    this.props.dispatch(tagEffects.getTags());
   }
 
   private fetch() {
@@ -45,7 +47,7 @@ class ArticleList extends React.PureComponent<IProps, IState> {
   }
 
   public render() {
-    const { articles, device } = this.props;
+    const { articles, tag, device } = this.props;
     const { size, page } = this.state;
     return (
       <div className={styles.container}>
@@ -59,13 +61,14 @@ class ArticleList extends React.PureComponent<IProps, IState> {
             onChange={this.changePage.bind(this)}
           />
         </div>
-        {!device.isMobile ? <Tags tags={articles.tags} /> : null}
+        {!device.isMobile ? <Tags tags={tag.tags} /> : null}
       </div>
     );
   }
 }
 
-export default connect(({ articles, device }: IStateRoot) => ({
+export default connect(({ articles, device, tag }: IStateRoot) => ({
   articles,
-  device
+  device,
+  tag
 }))(ArticleList);

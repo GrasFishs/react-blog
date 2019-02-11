@@ -2,10 +2,8 @@
 
 .tags {
   @include shadow($y: 2px);
-  width: 350px;
-  min-height: 175px;
+  width: 250px;
   background: white;
-  margin-left: 10px;
   box-sizing: border-box;
   padding: 10px;
   .title {
@@ -19,8 +17,19 @@
     @include shadow($y: 1px);
     color: $black-64;
     cursor: pointer;
+    transition: all ease 0.1s;
+    &:hover {
+      background: $danger-color;
+      color: white;
+    }
   }
   &.sticky {
     position: fixed;
+  }
+}
+
+@media all and (max-width:$md){
+  .tags{
+    display: none;
   }
 }

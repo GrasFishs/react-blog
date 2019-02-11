@@ -3,7 +3,16 @@
   margin: 10px 0;
   display: flex;
   align-items: flex-start;
+}
+
+@media all and (max-width: $md) {
   .articles {
-    flex: 1;
+    width: 100%;
+  }
+}
+
+@media all and (min-width: $md) {
+  .articles {
+    width: calc(100% - 260px);
   }
 }

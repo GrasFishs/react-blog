@@ -65,17 +65,13 @@ export class Header extends React.PureComponent<IProps, IState> {
               className={`${styles.header} ${
                 !this.state.isOnTop ? styles.sticky : ""
               } ${className ? className : ""}`}
+              style={{
+                ...style,
+                transform: `translateY(${this.state.isOnTop ? 0 : inStyle.y}%)`
+              }}
             >
               <div className={styles.left}>{inStyle.y}</div>
-              <div
-                className={styles.right}
-                style={{
-                  style,
-                  transform: `translateY(${
-                    this.state.isOnTop ? 0 : inStyle.y
-                  }%)`
-                }}
-              >
+              <div className={styles.right}>
                 {loginStatus ? (
                   <>
                     <div className={styles.username}>{user.user!.username}</div>

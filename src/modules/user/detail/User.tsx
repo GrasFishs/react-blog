@@ -24,5 +24,5 @@ const User: React.SFC<IProps> = ({ user }) =>
   );
 
 export default connect((state: IStateRoot) => ({ user: state.user }))(
-  checkToken(User)
+  checkToken()(User)
 );

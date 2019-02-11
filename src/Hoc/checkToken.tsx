@@ -10,24 +10,26 @@ interface IProps extends RouteChildrenProps {
   dispatch: EffectDispatch<IUserAction>;
 }
 
-export const checkToken = (
-  Cmpt: React.ComponentClass | React.FunctionComponent
-) => {
-  class CheckTokenComponent extends React.Component<IProps> {
-    public componentDidMount() {
-      const { dispatch, history } = this.props;
-      dispatch(gloablService.checkToken()).catch(err => {
-        dialog.danger({
-          content: err.message,
-          onOk() {
-            history.replace("/login");
+export const checkToken = (isReLogin = true) => {
+  return (Cmpt: React.ComponentClass | React.FunctionComponent) => {
+    class CheckTokenComponent extends React.Component<IProps> {
+      public componentDidMount() {
+        const { dispatch, history } = this.props;
+        dispatch(gloablService.checkToken()).catch(err => {
+          if (isReLogin) {
+            dialog.danger({
+              content: err.message,
+              onOk() {
+                history.replace("/login");
+              }
+            });
           }
         });
-      });
+      }
+      public render() {
+        return <Cmpt {...this.props} />;
+      }
     }
-    public render() {
-      return <Cmpt {...this.props} />;
-    }
-  }
-  return connect()(CheckTokenComponent);
+    return connect()(CheckTokenComponent);
+  };
 };

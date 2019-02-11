@@ -38,10 +38,6 @@ class ArticlesService implements IService {
       order
     });
   }
-
-  public async getTags(): Promise<{ tags: ITag[] }> {
-    return get<{ tags: ITag[] }>("/tag/all");
-  }
 }
 
 export const articlesService = new ArticlesService();
