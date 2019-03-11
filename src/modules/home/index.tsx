@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RouteChildrenProps } from "react-router";
+import { RouteComponentProps } from "react-router";
 import {
   IArticlesState,
   IArticlesAction,
@@ -8,13 +8,13 @@ import {
 import { EffectDispatch, IStateRoot } from "src/reducers";
 import { connect } from "react-redux";
 import { Articles } from "./components/Articles";
-import { Pagenation } from "../../../components/Pagination";
+import { Pagenation } from "../../components/Pagination";
 import { IDeviceState } from "src/models/global";
 import styles from "./style.scss";
 import { Tags } from "./components/Tags";
 import { tagEffects, ITagState } from "src/modules/tags/tag.model";
 
-interface IProps extends RouteChildrenProps {
+interface IProps extends RouteComponentProps {
   articles: IArticlesState;
   tag: ITagState;
   device: IDeviceState;
@@ -47,12 +47,22 @@ class ArticleList extends React.PureComponent<IProps, IState> {
   }
 
   public render() {
-    const { articles, tag, device } = this.props;
+    const {
+      articles,
+      tag,
+      device,
+      history,
+      match: { url }
+    } = this.props;
     const { size, page } = this.state;
     return (
       <div className={styles.container}>
         <div className={styles.articles}>
-          <Articles articles={articles.articles} />
+          <Articles
+            articles={articles.articles}
+            onDetail={id => history.push("/article/" + id)}
+            url={url}
+          />
           <Pagenation
             total={articles.total}
             size={size}
@@ -61,7 +71,7 @@ class ArticleList extends React.PureComponent<IProps, IState> {
             onChange={this.changePage.bind(this)}
           />
         </div>
-        {!device.isMobile ? <Tags tags={tag.tags} /> : null}
+        <Tags tags={tag.tags} />
       </div>
     );
   }

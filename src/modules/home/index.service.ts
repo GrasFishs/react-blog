@@ -1,4 +1,4 @@
-import { ITag } from "../../../data/Tag";
+import { ITag } from "../../data/Tag";
 import { IArticle } from "src/data/Article";
 import { IService } from "src/types/interface";
 import { IUser } from "src/data/User";

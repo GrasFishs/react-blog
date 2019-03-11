@@ -23,7 +23,7 @@ const Login: React.SFC<ILoginProps> = props => {
     props.dispatch(loginActions.setPassword(e.target["password"].value));
     props
       .dispatch(loginEffects.login())
-      .then(({ id }) => props.history.replace("/index/user/" + id));
+      .then(({ id }) => props.history.goBack());
   }
   return (
     <div className={styles.login}>

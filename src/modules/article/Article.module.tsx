@@ -1,15 +1,15 @@
-import { Switch, Route, RouteComponentProps } from "react-router-dom";
 import * as React from "react";
+import { Switch, Route, RouteComponentProps } from "react-router";
 import { asyncComponent } from "src/components/AsyncComponent";
 
-const ArticleList = asyncComponent(() => import("./List/index"));
+const ArticleDetail = asyncComponent(() => import("../article/Item/index"));
 
 type IProps = RouteComponentProps;
 
-const ArticleModule: React.SFC<IProps> = ({ match: { url } }) => {
+const ArticleModule: React.SFC<IProps> = ({ match:{path} }) => {
   return (
     <Switch>
-      <Route exact path={`${url}`} component={ArticleList} />
+      <Route path={`${path}/:id`} component={ArticleDetail} />
     </Switch>
   );
 };

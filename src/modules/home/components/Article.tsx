@@ -3,7 +3,12 @@ import { IDataArticle } from "../index.service";
 import { FaCommentAlt, FaHeart, FaEye } from "react-icons/fa";
 import styles from "./article.scss";
 
-export const Article: React.SFC<{ article: IDataArticle }> = ({ article }) => {
+interface IProps {
+  article: IDataArticle;
+  onClick: (articleId: number) => void;
+}
+
+export const Article: React.SFC<IProps> = ({ article, onClick }) => {
   return (
     <div className={styles.article}>
       <div className={styles.header}>
@@ -17,7 +22,9 @@ export const Article: React.SFC<{ article: IDataArticle }> = ({ article }) => {
       </div>
       <div className={styles.body}>
         <div className={styles.info}>
-          <div className={styles.title}>{article.title}</div>
+          <div onClick={() => onClick(article.id)} className={styles.title}>
+            {article.title}
+          </div>
           <div className={styles.content}>{article.content}</div>
         </div>
         {article.cover ? (

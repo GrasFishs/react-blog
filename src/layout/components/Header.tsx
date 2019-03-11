@@ -77,7 +77,7 @@ export class Header extends React.PureComponent<IProps, IState> {
                     <div className={styles.username}>{user.user!.username}</div>
                     <img
                       onClick={() =>
-                        history.push(`/index/user/${user.user!.id}`)
+                        history.push(`/user/${user.user!.id}`)
                       }
                       className={styles.avatar}
                       src={user.user!.avatar}

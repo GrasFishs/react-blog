@@ -5,13 +5,19 @@ import styles from "./articles.scss";
 
 interface IProps {
   articles: IDataArticle[];
+  onDetail: (id: number) => void;
+  url: string;
 }
 
-export const Articles: React.SFC<IProps> = ({ articles }) => {
+export const Articles: React.SFC<IProps> = ({ articles, onDetail }) => {
   return articles.length > 0 ? (
     <div className={styles.articles}>
       {articles.map(article => (
-        <Article key={article.id} article={article} />
+        <Article
+          key={article.id}
+          article={article}
+          onClick={id => onDetail(id)}
+        />
       ))}
     </div>
   ) : (

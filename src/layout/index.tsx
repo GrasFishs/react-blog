@@ -9,12 +9,15 @@ import { fromEvent, Subscription } from "rxjs";
 import { debounceTime, map } from "rxjs/operators";
 import { IDeviceAction, deviceActions } from "src/models/global";
 import { Header } from "./components/Header";
-import { checkToken } from "src/Hoc/checkToken";
 import styles from "./style.scss";
 
-const userModule = asyncComponent(() => import("../modules/user/User.module"));
+const UserModule = asyncComponent(() => import("../modules/user/User.module"));
 const ArticleModule = asyncComponent(() =>
   import("../modules/article/Article.module")
+);
+const HomeModule = asyncComponent(() => import("../modules/home/index"));
+const LoginModule = asyncComponent(() =>
+  import("../modules/login/Login.module")
 );
 
 interface IRouteParams {
@@ -27,8 +30,15 @@ interface ILayoutProps extends RouteComponentProps<IRouteParams> {
   dispatch: EffectDispatch<IUserAction | IDeviceAction>;
 }
 
-class LayoutModule extends React.PureComponent<ILayoutProps> {
+interface ILayoutState {
+  isLogin: boolean;
+}
+
+class LayoutModule extends React.PureComponent<ILayoutProps, ILayoutState> {
   private subscribtion: Subscription;
+  public state: ILayoutState = {
+    isLogin: false
+  };
 
   public componentDidMount() {
     this.props.dispatch(deviceActions.setWidth(window.innerWidth));
@@ -39,6 +49,11 @@ class LayoutModule extends React.PureComponent<ILayoutProps> {
     this.subscribtion = widthWatcher$.subscribe(width => {
       this.props.dispatch(deviceActions.setWidth(width));
     });
+    this.setState({ isLogin: this.props.location.pathname === "/login" });
+  }
+
+  public componentWillReceiveProps(preProps: ILayoutProps) {
+    this.setState({ isLogin: preProps.location.pathname === "/login" });
   }
 
   public componentWillUnmount() {
@@ -46,19 +61,20 @@ class LayoutModule extends React.PureComponent<ILayoutProps> {
   }
 
   public render() {
-    const {
-      match: { url },
-      history,
-      user,
-      loginStatus
-    } = this.props;
-    return (
+    const { history, user, loginStatus } = this.props;
+    const { isLogin } = this.state;
+    return isLogin ? (
+      <Switch>
+        <Route path="/login" component={LoginModule} />
+      </Switch>
+    ) : (
       <div>
         <Header user={user} loginStatus={loginStatus} history={history}>
           <div className={styles.body}>
             <Switch>
-              <Route exact path={url} component={ArticleModule} />
-              <Route path={`${url}/user`} component={userModule} />
+              <Route exact path="/" component={HomeModule} />
+              <Route path="/article" component={ArticleModule} />
+              <Route path="/user" component={UserModule} />
             </Switch>
           </div>
         </Header>
@@ -66,11 +82,9 @@ class LayoutModule extends React.PureComponent<ILayoutProps> {
     );
   }
 }
-export default checkToken(false)(
-  withRouter(
-    connect(({ user, login }: IStateRoot) => ({
-      user,
-      loginStatus: login.status
-    }))(LayoutModule)
-  )
+export default withRouter(
+  connect(({ user, login }: IStateRoot) => ({
+    user,
+    loginStatus: login.status
+  }))(LayoutModule)
 );
